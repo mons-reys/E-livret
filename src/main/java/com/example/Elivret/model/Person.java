@@ -19,18 +19,14 @@ public class Person {
     private Long id;
 
     @Basic
-    @NotNull
     private String firstName;
 
     @Basic
-    @NotNull
     private String lastName;
 
     @Basic
-    @NotNull
     private String email;
 
     @Basic
-    @NotNull
     private String role;
 }

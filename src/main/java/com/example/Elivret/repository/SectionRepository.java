@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Long> {
-    List<Section> findByElivretId(Long elivretId);
+    List<Section> findByElivretId(Long postId);
 }
 

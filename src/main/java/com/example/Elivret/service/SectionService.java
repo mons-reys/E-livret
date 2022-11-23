@@ -2,7 +2,9 @@ package com.example.Elivret.service;
 
 
 
+import com.example.Elivret.model.Admin;
 import com.example.Elivret.model.Elivret;
+import com.example.Elivret.model.Person;
 import com.example.Elivret.model.Section;
 import com.example.Elivret.repository.ElivretRepository;
 import com.example.Elivret.repository.SectionRepository;
@@ -23,17 +25,27 @@ public class SectionService {
     @Autowired
     private ElivretService elivretService;
 
+    @Autowired
+    private PersonService personService;
+
 
     public void createSetion(Long elivretId, Section requestSection) {
+
+        //find elivret
         Elivret elivret = elivretService.findElivretById(elivretId);
+
+        //manual create admin for persistance exception
+        Person admin = new Admin();
+        admin.setFirstName("admin");
+        personService.createPerson(admin);
+
+        //set Section properties
+        requestSection.setPerson(admin);
         requestSection.setElivret(elivret);
         sectionRepository.save(requestSection);
     }
 
     public List<Section> getSectionsByElivretId(Long elivretId) {
-        if (!elivretService.existsById(elivretId)) {
-            throw new RuntimeException("Not found Elivret with id = " + elivretId);
-        }
         List<Section> sections = sectionRepository.findByElivretId(elivretId);
         return sections;
     }
