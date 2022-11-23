@@ -28,4 +28,13 @@ public class ElivretService {
         List<Elivret> posts = elivretRepository.findAll();
         return posts;
     }
+
+    public Elivret findElivretById(Long elivretId) {
+        Elivret elivret = elivretRepository.findById(elivretId).orElseThrow(() -> new RuntimeException("cannot find elivret with id : " + elivretId));
+        return elivret;
+    }
+
+    public boolean existsById(Long elivretId) {
+        return elivretRepository.existsById(elivretId);
+    }
 }
