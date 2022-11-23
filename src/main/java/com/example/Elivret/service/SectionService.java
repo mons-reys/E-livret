@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 @Configurable
 @Transactional
-public class ElivretService {
+public class SectionService {
     @Autowired
     private ElivretRepository  elivretRepository;
 
