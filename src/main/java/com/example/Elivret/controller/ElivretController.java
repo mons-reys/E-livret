@@ -19,7 +19,7 @@ public class ElivretController {
     private ElivretService elivretService;
 
     @PostMapping
-    public ResponseEntity createPost(@RequestBody Elivret elivret) {
+    public ResponseEntity createElivret(@RequestBody Elivret elivret) {
         elivretService.createElivret(elivret);
         return new ResponseEntity(HttpStatus.OK);
     }

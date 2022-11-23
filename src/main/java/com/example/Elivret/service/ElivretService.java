@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Configurable
 @Transactional
@@ -20,5 +22,10 @@ public class ElivretService {
     public void createElivret(Elivret elivret) {
         System.out.println("done");
         elivretRepository.save(elivret);
+    }
+
+    public List<Elivret> showAllPosts() {
+        List<Elivret> posts = elivretRepository.findAll();
+        return posts;
     }
 }
