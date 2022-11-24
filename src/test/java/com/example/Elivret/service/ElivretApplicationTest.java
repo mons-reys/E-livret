@@ -23,8 +23,7 @@ public class ElivretApplicationTest {
     SectionService sectionService;
 
     @Test
-    @Order(1)
-    public void testCreateElivret(){
+    public void testCreateAndGetElivret(){
         Elivret p = new Elivret();
         p.setTitle("E2");
         elivretService.createElivret(p);
@@ -34,8 +33,7 @@ public class ElivretApplicationTest {
     }
 
     @Test
-    @Order(1)
-    public void testCreateSeciton(){
+    public void testCreateAndGetSeciton(){
         Elivret elivret = new Elivret();
         elivret.setTitle("E2");
         elivretService.createElivret(elivret);
