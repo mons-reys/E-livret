@@ -1,9 +1,7 @@
 package com.example.Elivret.controller;
 
 
-import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Section;
-import com.example.Elivret.service.ElivretService;
 import com.example.Elivret.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,7 @@ public class SectionController {
 
     @GetMapping("/elivret/{elivretId}/sections")
     public ResponseEntity<List<Section>> getAllelivretSections(@PathVariable(value = "elivretId") Long elivretId) {
-        List<Section> sections = sectionService.getSectionsByElivretId(elivretId);
+        List<Section> sections = sectionService.findSectionsByElivretId(elivretId);
         return new ResponseEntity<>(sections, HttpStatus.OK);
     }
 

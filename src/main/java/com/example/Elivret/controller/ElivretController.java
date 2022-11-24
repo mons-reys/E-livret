@@ -18,26 +18,21 @@ public class ElivretController {
     @Autowired
     private ElivretService elivretService;
 
-    @PostMapping ("/elivret")
+    @PostMapping ("/elivret/add")
     public ResponseEntity createElivret(@RequestBody Elivret elivret) {
         elivretService.createElivret(elivret);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/elivrets")
-    public ResponseEntity<List<Elivret>> showAllPosts() {
+    public ResponseEntity<List<Elivret>> getAllElivrets() {
         return new ResponseEntity<>(elivretService.showAllElivrets(), HttpStatus.OK);
     }
 
-
-//    @PutMapping("/elivrets/{id}")
-//
-//    @GetMapping("/elivrets/{id}")
-//
-//    @DeleteMapping("/elivrets/{id}")
-
-
-
-
+    @DeleteMapping("/elivrets/{elivretId}")
+    public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("elivretId") long elivretId) {
+        elivretService.deleteById(elivretId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

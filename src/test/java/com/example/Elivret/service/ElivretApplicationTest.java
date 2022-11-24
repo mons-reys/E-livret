@@ -4,7 +4,6 @@ import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Section;
 import com.example.Elivret.service.ElivretService;
 import com.example.Elivret.service.SectionService;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,13 +22,16 @@ public class ElivretApplicationTest {
     SectionService sectionService;
 
     @Test
-    public void testCreateAndGetElivret(){
+    public void testCreateAndGetAndDeleteElivret(){
         Elivret p = new Elivret();
         p.setTitle("E2");
         elivretService.createElivret(p);
         List<Elivret> list =  elivretService.showAllElivrets();
         assertEquals("E2", list.get(0).getTitle());
         assertEquals("E2", p.getTitle());
+        System.out.println(p.getId());
+        elivretService.deleteById(p.getId());
+        assertEquals(null, elivretService.findElivretById(p.getId()));
     }
 
     @Test
@@ -46,7 +48,7 @@ public class ElivretApplicationTest {
         section2.setTitle("section Title 2");
         section2.setElivret(elivret);
 
-        List<Section> sections = sectionService.getSectionsByElivretId(elivret.getId());
+        List<Section> sections = sectionService.findSectionsByElivretId(elivret.getId());
 
         System.out.println(sections);
 

@@ -37,4 +37,8 @@ public class ElivretService {
     public boolean existsById(Long elivretId) {
         return elivretRepository.existsById(elivretId);
     }
+
+    public void deleteById(long elivretId) {
+        elivretRepository.deleteById(elivretId);
+    }
 }

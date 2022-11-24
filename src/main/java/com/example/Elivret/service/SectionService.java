@@ -6,7 +6,6 @@ import com.example.Elivret.model.Admin;
 import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Person;
 import com.example.Elivret.model.Section;
-import com.example.Elivret.repository.ElivretRepository;
 import com.example.Elivret.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -45,12 +44,12 @@ public class SectionService {
         sectionRepository.save(requestSection);
     }
 
-    public List<Section> getSectionsByElivretId(Long elivretId) {
+    public List<Section> findSectionsByElivretId(Long elivretId) {
         List<Section> sections = sectionRepository.findByElivretId(elivretId);
         return sections;
     }
 
-    public Section getSectionById(Long sectionId) {
+    public Section findSectionById(Long sectionId) {
         Section section = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
         return section;
     }
