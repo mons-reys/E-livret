@@ -27,6 +27,23 @@ public class SectionService {
 
     @Autowired
     private PersonService personService;
+    
+    public void updateSection(Long sectionId,String title){
+        Section sectionToUpdate = sectionRepository.getSection(sectionId);
+        sectionToUpdate.setTitle(title);
+        sectionRepository.save(sectionToUpdate);
+    }
+
+    public void updateSectionPerson(Long sectionId,Person person){
+        Section sectionToUpdate = sectionRepository.getSection(sectionId);
+        sectionToUpdate.setPerson(person);
+        sectionRepository.save(sectionToUpdate);
+    }
+
+    public void deleteSection(Long sectionId){
+        Section sectionToDelete = sectionRepository.getSection(sectionId);
+        sectionRepository.delete(sectionToDelete);
+    }
 
 
     public void createSetion(Long elivretId, Section requestSection) {
