@@ -38,7 +38,7 @@ public class ElivretController {
 	@GetMapping("/elivret/{elivretId}")
 	public ResponseEntity<Elivret> updateElivret(@PathVariable(value = "elivretId") Long elivretId) {
 		Elivret elivret = elivretService.getElivretById(elivretId);
-		return new ResponseEntity<>(sections, HttpStatus.OK);
+		return new ResponseEntity<>(elivret, HttpStatus.OK);
 	}
 
 }
