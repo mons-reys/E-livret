@@ -28,7 +28,7 @@ public class ElivretController {
 		return new ResponseEntity<>(elivretService.showAllElivrets(), HttpStatus.OK);
 	}
 
-	@PostMapping ("/elivret/{elivretId}")
+	@PutMapping ("/elivret/{elivretId}")
     public ResponseEntity updateElivret(@PathVariable(value = "elivretId") Long elivretId,
                                         @RequestBody String title) {
         elivretService.updateElivret(elivretId,title)
