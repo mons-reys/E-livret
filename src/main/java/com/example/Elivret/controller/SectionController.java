@@ -32,6 +32,14 @@ public class SectionController {
         List<Section> sections = sectionService.getSectionsByElivretId(elivretId);
         return new ResponseEntity<>(sections, HttpStatus.OK);
     }
+    
+    @PutMapping ("/elivret/{elivretId}/section/{sectionId}")
+    public ResponseEntity updateElivret(@PathVariable(value = "sectionId") Long elivretId,
+                                        @RequestBody String title, @RequestBody Person person) {
+        sectionService.updateSection(elivretId,title);
+        sectionService.updateSectionPerson(elivretId,person);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 
 }
