@@ -29,19 +29,19 @@ public class SectionService {
     private PersonService personService;
     
     public void updateSection(Long sectionId,String title){
-        Section sectionToUpdate = sectionRepository.getSection(sectionId);
+        Section sectionToUpdate = sectionRepository.findById(sectionId);
         sectionToUpdate.setTitle(title);
         sectionRepository.save(sectionToUpdate);
     }
 
     public void updateSectionPerson(Long sectionId,Person person){
-        Section sectionToUpdate = sectionRepository.getSection(sectionId);
+        Section sectionToUpdate = sectionRepository.findById(sectionId);
         sectionToUpdate.setPerson(person);
         sectionRepository.save(sectionToUpdate);
     }
 
     public void deleteSection(Long sectionId){
-        Section sectionToDelete = sectionRepository.getSection(sectionId);
+        Section sectionToDelete = sectionRepository.findbyid(sectionId);
         sectionRepository.delete(sectionToDelete);
     }
 
