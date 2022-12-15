@@ -2,7 +2,6 @@ package com.example.Elivret.service;
 
 
 
-import com.example.Elivret.model.Admin;
 import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Person;
 import com.example.Elivret.model.Section;
@@ -28,13 +27,15 @@ public class SectionService {
     private PersonService personService;
 
 
-    public void createSetion(Long elivretId, Section requestSection) {
+
+
+    public void createSection(Long elivretId, Section requestSection) {
 
         //find elivret
         Elivret elivret = elivretService.findElivretById(elivretId);
 
         //manual create admin for persistance exception
-        Person admin = new Admin();
+        Person admin = new Person();
         admin.setFirstName("admin");
         personService.createPerson(admin);
 

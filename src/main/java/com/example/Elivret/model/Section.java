@@ -24,6 +24,10 @@ public class Section {
     @NotNull
     private String title;
 
+    @Basic
+    @NotNull
+    private boolean visibility;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "elivret_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

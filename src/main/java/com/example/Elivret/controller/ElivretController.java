@@ -25,12 +25,12 @@ public class ElivretController {
     }
 
     @GetMapping("/elivrets")
-    public ResponseEntity<List<Elivret>> getAllElivrets() {
-        return new ResponseEntity<>(elivretService.showAllElivrets(), HttpStatus.OK);
+    public ResponseEntity<List<Elivret>> findAllElivrets() {
+        return new ResponseEntity<>(elivretService.findAllElivrets(), HttpStatus.OK);
     }
 
     @DeleteMapping("/elivrets/{elivretId}")
-    public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("elivretId") long elivretId) {
+    public ResponseEntity<HttpStatus> deleteElivret(@PathVariable("elivretId") Long elivretId) {
         elivretService.deleteById(elivretId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

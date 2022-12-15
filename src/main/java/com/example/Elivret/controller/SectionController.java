@@ -18,15 +18,16 @@ public class SectionController {
     @Autowired
     private SectionService sectionService;
 
+    //remove add*
     @PostMapping ("/elivret/{elivretId}/sections/add")
     public ResponseEntity createSection(@PathVariable(value = "elivretId") Long elivretId,
                                         @RequestBody Section sectionRequest) {
-        sectionService.createSetion(elivretId, sectionRequest);
+        sectionService.createSection(elivretId, sectionRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/elivret/{elivretId}/sections")
-    public ResponseEntity<List<Section>> getAllelivretSections(@PathVariable(value = "elivretId") Long elivretId) {
+    public ResponseEntity<List<Section>> findAlleLivretSections(@PathVariable(value = "elivretId") Long elivretId) {
         List<Section> sections = sectionService.findSectionsByElivretId(elivretId);
         return new ResponseEntity<>(sections, HttpStatus.OK);
     }

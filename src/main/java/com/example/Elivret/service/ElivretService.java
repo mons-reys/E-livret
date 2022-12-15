@@ -20,11 +20,10 @@ public class ElivretService {
 
 
     public void createElivret(Elivret elivret) {
-        System.out.println("done");
         elivretRepository.save(elivret);
     }
 
-    public List<Elivret> showAllElivrets() {
+    public List<Elivret> findAllElivrets() {
         List<Elivret> posts = elivretRepository.findAll();
         return posts;
     }
