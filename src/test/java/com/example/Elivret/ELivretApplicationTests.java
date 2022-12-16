@@ -135,6 +135,37 @@ public class ElivretApplicationTest {
         assertEquals("De quelle couleur est le cheval noir d'Henri IV?", updatedQuestion.getContent());
     }
     
-    
+    @Test
+    public void testDeleteQuestion(){
+    	//intitialisation
+
+        Elivret elivret = new Elivret();
+        elivret.setTitle("E3");
+        elivretService.createElivret(elivret);
+
+
+        Section section = new Section();
+        section.setTitle("section 1");
+        sectionService.createSection(elivret.getId(), section);
+
+        Question question =  new Question();
+        question.setContent("De quelle couleur est le cheval blanc d'Henri IV?");
+        question.setType(QuestionType.text);
+
+
+        List<String> options = new ArrayList<String>();
+        options.add("option 1 ");
+        question.setOptions(options);
+
+        List<String> answers = new ArrayList<String>();
+        answers.add("answer 1 ");
+        question.setAnswers(answers);
+
+        //test de suppression
+        questionService.deleteQuestion(question.getId());
+
+
+        assertThrows("De quelle couleur est le cheval noir d'Henri IV?", updatedQuestion.getContent());
+    }
 
 }

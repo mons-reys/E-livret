@@ -53,7 +53,7 @@ public class QuestionService {
         //find question
         Question question = findByQuestionId(questionId);
 
-        QuestionRepository.delete(question)
+        questionRepository.delete(question);
     }
 
     public List<Question> findQuestionsBySectionId(Long sectionId) {

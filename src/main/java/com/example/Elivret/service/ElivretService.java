@@ -19,7 +19,7 @@ public class ElivretService {
     private ElivretRepository  elivretRepository;
     
     public void updateElivret(Long elivretId,String title){
-        Elivret elivretToUpdate = elivretRepository.findById(livretId);
+        Elivret elivretToUpdate = elivretRepository.findById(elivretId);
         elivretToUpdate.setTitle(title);
         elivretRepository.save(elivretToUpdate);
     }
