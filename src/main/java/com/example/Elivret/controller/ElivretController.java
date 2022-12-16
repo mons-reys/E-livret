@@ -31,7 +31,7 @@ public class ElivretController {
 	@PutMapping ("/elivret/{elivretId}")
     public ResponseEntity updateElivret(@PathVariable(value = "elivretId") Long elivretId,
                                         @RequestBody String title) {
-        elivretService.updateElivret(elivretId,title)
+        elivretService.updateElivret(elivretId,title);
         return new ResponseEntity(HttpStatus.OK);
     }
 

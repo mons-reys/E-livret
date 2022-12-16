@@ -1,4 +1,4 @@
-package com.example.Elivret;
+package com.example.Elivret.service;
 
 import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Section;

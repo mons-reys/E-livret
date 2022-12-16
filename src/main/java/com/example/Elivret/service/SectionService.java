@@ -29,19 +29,19 @@ public class SectionService {
     private PersonService personService;
     
     public void updateSection(Long sectionId,String title){
-        Section sectionToUpdate = sectionRepository.findById(sectionId);
+        Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
         sectionToUpdate.setTitle(title);
         sectionRepository.save(sectionToUpdate);
     }
 
     public void updateSectionPerson(Long sectionId,Person person){
-        Section sectionToUpdate = sectionRepository.findById(sectionId);
+        Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
         sectionToUpdate.setPerson(person);
         sectionRepository.save(sectionToUpdate);
     }
 
     public void deleteSection(Long sectionId){
-        Section sectionToDelete = sectionRepository.findbyid(sectionId);
+        Section sectionToDelete = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
         sectionRepository.delete(sectionToDelete);
     }
 
