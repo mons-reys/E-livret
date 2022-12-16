@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Inheritance
 @Entity
 @Data
 @NoArgsConstructor
@@ -29,7 +28,7 @@ public class Person {
 
     @Basic
     private String role;
-    
+
     @Basic
     private String type;
 }

@@ -33,13 +33,13 @@ public class QuestionService {
 
     public void createQuestion(Long sectionId, Question requestQuestion) {
         //find section
-        Section section = sectionService.getSectionById(sectionId);
+        Section section = sectionService.findSectionById(sectionId);
         requestQuestion.setSection(section);
 
         //set question properties
         questionRepository.save(requestQuestion);
     }
-    
+
     public void updateQuestion(Long questionId, String newContent) {
         //find question
         Question question = findByQuestionId(questionId);
@@ -55,6 +55,7 @@ public class QuestionService {
 
         questionRepository.delete(question);
     }
+
 
     public List<Question> findQuestionsBySectionId(Long sectionId) {
         List<Question> questions = questionRepository.findBySectionId(sectionId);

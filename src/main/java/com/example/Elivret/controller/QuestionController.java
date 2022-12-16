@@ -36,18 +36,19 @@ public class QuestionController {
         List<Question> questions = questionService.findQuestionsBySectionId(sectionId);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
-    
+
     @PutMapping ("/sections/{sectionId}/questions/{questionId}")
     public ResponseEntity updateQuestion(@PathVariable(value = "questionId") Long questionId,
                                         @RequestBody String newContent) {
-        QuestionService.updateQuestion(questionId,newContent);
+        questionService.updateQuestion(questionId,newContent);
         return new ResponseEntity(HttpStatus.OK);
     }
     
     @DeleteMapping("/sections/{sectionId}/questions/{questionId}")
     public ResponseEntity deleteQuestion(@PathVariable(value = "questionId") Long questionId)
-      throws ResourceNotFoundException {
-    	QuestionService.deleteQuestion(questionId);
+    {
+    	questionService.deleteQuestion(questionId);
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }
