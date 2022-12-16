@@ -26,7 +26,13 @@ public class Question {
 
     @Basic
     @NotNull
-    private String response;
+    private QuestionType type;
+
+    @ElementCollection
+    private List<String> options;
+
+    @ElementCollection
+    private List<String> answers;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "section_id", nullable = false)

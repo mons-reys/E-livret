@@ -29,4 +29,7 @@ public class Person {
 
     @Basic
     private String role;
+    
+    @Basic
+    private String type;
 }
