@@ -40,6 +40,6 @@ public class SectionController {
         sectionService.updateSectionPerson(elivretId,person);
         return new ResponseEntity(HttpStatus.OK);
     }
-
+    
 
 }
