@@ -37,9 +37,15 @@ public class ElivretController {
     }
 
 	@GetMapping("/elivret/{elivretId}")
-	public ResponseEntity<Elivret> updateElivret(@PathVariable(value = "elivretId") Long elivretId) {
+	public ResponseEntity<Elivret> showElivretById(@PathVariable(value = "elivretId") Long elivretId) {
 		Elivret elivret = elivretService.getElivretById(elivretId);
 		return new ResponseEntity<>(elivret, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/elivret/{elivretId}")
+	public ResponseEntity<Elivret> deleteElivretById(@PathVariable(value = "elivretId") Long elivretId) {
+		elivretService.deleteById(elivretId);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 
