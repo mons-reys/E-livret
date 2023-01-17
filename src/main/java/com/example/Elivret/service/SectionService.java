@@ -71,4 +71,10 @@ public class SectionService {
         Section section = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
         return section;
     }
+
+    public void updateVisibility(Long sectionId, boolean visibility) {
+        Section section = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
+        section.setVisibility(visibility);
+        sectionRepository.save(section);
+    }
 }

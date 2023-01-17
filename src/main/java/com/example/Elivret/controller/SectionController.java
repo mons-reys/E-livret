@@ -29,7 +29,7 @@ public class SectionController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-	@DeleteMapping ("/elivret/{elivretId}/section/{sectionId}")
+	@DeleteMapping ("/elivret/sections/{sectionId}")
     public ResponseEntity deleteSection(@PathVariable(value = "sectionId") Long sectionId) {
         sectionService.deleteSection(sectionId);
         return new ResponseEntity(HttpStatus.OK);
@@ -47,6 +47,13 @@ public class SectionController {
     public ResponseEntity<List<Section>> findAlleLivretSections(@PathVariable(value = "elivretId") Long elivretId) {
         List<Section> sections = sectionService.findSectionsByElivretId(elivretId);
         return new ResponseEntity<>(sections, HttpStatus.OK);
+    }
+
+    @PostMapping ("/elivret/sections/{sectionId}/updateVisibility")
+    public ResponseEntity createSection(@PathVariable(value = "sectionId") Long sectionId,
+                                        @RequestBody boolean visibility) {
+        sectionService.updateVisibility(sectionId, visibility);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

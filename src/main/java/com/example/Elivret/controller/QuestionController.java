@@ -25,7 +25,7 @@ public class QuestionController {
 
     //remove add*
     @PostMapping ("/sections/{sectionId}/questions/add")
-    public ResponseEntity createQuestion(@PathVariable(value = "sectionId") Long sectionId,
+    public ResponseEntity<Void> createQuestion(@PathVariable(value = "sectionId") Long sectionId,
                                         @RequestBody Question questionRequest) {
         questionService.createQuestion(sectionId, questionRequest);
         return new ResponseEntity(HttpStatus.OK);

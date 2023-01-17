@@ -28,6 +28,10 @@ public class Section {
     @NotNull
     private boolean visibility;
 
+    @Basic
+    @NotNull
+    private String personType;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "elivret_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

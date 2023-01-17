@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "token")
+@CrossOrigin(origins = "http://localhost:4200/", allowedHeaders = "*")
 public class ElivretController {
 
 	@Autowired
