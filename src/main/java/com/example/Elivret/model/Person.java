@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,7 +28,13 @@ public class Person {
     private String email;
 
     @Basic
-    private String role;
+    private String password;
+
+    @Basic
+    private String userName;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    Set<String> roles;
 
     @Basic
     private String type;
