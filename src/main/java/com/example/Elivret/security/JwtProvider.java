@@ -15,10 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -86,9 +83,14 @@ public class JwtProvider {
 	}
 
 	public String resolveToken(HttpServletRequest req) {
+		String token = req.getParameter("token");
 		String bearerToken = req.getHeader("Authorization");
-		if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-			return bearerToken.substring(7);
+		if(token != null){
+			return token;
+		}else if(bearerToken != null){
+			if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+				return bearerToken.substring(7);
+			}
 		}
 		return null;
 	}

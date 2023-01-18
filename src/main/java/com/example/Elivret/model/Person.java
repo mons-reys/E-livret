@@ -37,5 +37,5 @@ public class Person {
     Set<String> roles;
 
     @Basic
-    private String type;
+    private String personType;
 }

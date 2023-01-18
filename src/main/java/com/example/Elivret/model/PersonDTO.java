@@ -12,7 +12,7 @@ import java.util.Set;
 public class PersonDTO {
 
     private String userName;
-    private String password;
+    private String email;
     Set<String> roles;
 
 }

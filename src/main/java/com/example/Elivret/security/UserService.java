@@ -42,7 +42,7 @@ public class UserService {
 	}
 
 	public String signup(Person user) {
-
+		System.out.println(user);
 		if (!userRepository.existsByUserName(user.getUserName())) {
 			System.out.println(user.getPassword());
 			user.setPassword(passwordEncoder.encode(user.getPassword()));

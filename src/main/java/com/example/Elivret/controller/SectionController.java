@@ -3,14 +3,22 @@ package com.example.Elivret.controller;
 import com.example.Elivret.model.Elivret;
 
 import com.example.Elivret.model.Person;
+import com.example.Elivret.model.PersonDTO;
 import com.example.Elivret.model.Section;
+import com.example.Elivret.security.UserService;
+import com.example.Elivret.service.PersonService;
 import com.example.Elivret.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -19,6 +27,13 @@ public class SectionController {
 
 	@Autowired
 	private SectionService sectionService;
+
+    @Autowired
+    private PersonService personService;
+
+    @Autowired
+    private UserService userService;
+
 
 
 	@PutMapping ("/elivret/{elivretId}/section/{sectionId}")
@@ -55,5 +70,50 @@ public class SectionController {
         sectionService.updateVisibility(sectionId, visibility);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @PostMapping ("/elivret/sections/{sectionId}/invite")
+    public ResponseEntity inviteToFillSection(@PathVariable(value = "sectionId") Long sectionId,
+                                        @RequestBody Person person) {
+        Section section = sectionService.findSectionById(sectionId);
+        Person person1= new Person();
+
+        person1.setEmail( person.getEmail() );
+        person1.setUserName(person.getUserName());
+
+        person1.setPassword("123456");
+
+        Set<String> roles = new HashSet<String>();
+        roles.add(person.getPersonType());
+        person1.setRoles(roles);
+        section.setPerson(person1);
+
+        String token = userService.signup(person1);
+
+        String url = generateInvitationLink(sectionId, token, "test", "123456");
+        System.out.println(url);
+
+        return new ResponseEntity(url, HttpStatus.OK);
+    }
+
+    public String generateInvitationLink(long sectionId, String token, String username, String password) {
+        UriComponentsBuilder builder =  UriComponentsBuilder.newInstance();
+        UriComponents uriComponents = builder.path("/section/{sectionId}/take")
+                .queryParam("token", token)
+                .queryParam("username", username)
+                .queryParam("password", password)
+                .buildAndExpand(sectionId);
+        return uriComponents.toUriString();
+    }
+
+
+    @GetMapping("/elivret/sections/{sectionId}/take")
+    public ResponseEntity<List<Section>> takeSection(@PathVariable(value = "sectionId") Long sectionId) {
+        Section section = sectionService.findSectionById(sectionId);
+        List<Section> sections = new ArrayList<>();
+        sections.add(section);
+        return new ResponseEntity<>(sections, HttpStatus.OK);
+    }
+
+
 
 }

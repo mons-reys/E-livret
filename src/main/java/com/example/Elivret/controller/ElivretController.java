@@ -1,13 +1,20 @@
 package com.example.Elivret.controller;
 
+import com.example.Elivret.model.AppUserRole;
 import com.example.Elivret.model.Elivret;
+import com.example.Elivret.model.Person;
 import com.example.Elivret.service.ElivretService;
+import com.example.Elivret.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -16,6 +23,9 @@ public class ElivretController {
 
 	@Autowired
 	private ElivretService elivretService;
+
+	@Autowired
+	private PersonService personService;
 
 
 	@PostMapping("/add")
@@ -48,5 +58,15 @@ public class ElivretController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+
+	@PostConstruct
+	public void init() {
+		//create Admin
+		Set<String> roles = new HashSet<String>();
+		roles.add( String.valueOf(AppUserRole.ROLE_ADMIN) );
+
+		Person p = new Person(1L, "admin", "admin", "admin", "admin", "admin", roles, "test" );
+		personService.createPerson(p);
+	}
 
 }
