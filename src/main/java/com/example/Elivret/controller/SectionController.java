@@ -15,14 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "token")
+@CrossOrigin( origins = "*", maxAge = 3600 , exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
 public class SectionController {
 
 	@Autowired
@@ -77,10 +74,15 @@ public class SectionController {
         Section section = sectionService.findSectionById(sectionId);
         Person person1= new Person();
 
-        person1.setEmail( person.getEmail() );
+        person1.setEmail( person.getEmail().toUpperCase() );
         person1.setUserName(person.getUserName());
 
-        person1.setPassword("123456");
+        String password = new Random().ints(10, 33, 122).collect(StringBuilder::new,
+                        StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+
+        person1.setPassword(password);
 
         Set<String> roles = new HashSet<String>();
         roles.add(person.getPersonType());
@@ -89,7 +91,7 @@ public class SectionController {
 
         String token = userService.signup(person1);
 
-        String url = generateInvitationLink(sectionId, token, "test", "123456");
+        String url = generateInvitationLink(sectionId, token, person.getUserName(), password);
         System.out.println(url);
 
         return new ResponseEntity(url, HttpStatus.OK);
@@ -104,6 +106,8 @@ public class SectionController {
                 .buildAndExpand(sectionId);
         return uriComponents.toUriString();
     }
+
+
 
 
     @GetMapping("/elivret/sections/{sectionId}/take")

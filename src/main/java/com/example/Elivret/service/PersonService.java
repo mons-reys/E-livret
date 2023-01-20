@@ -22,4 +22,8 @@ public class PersonService {
         Person person = personRepository.save(requestPerson);
     }
 
+    public void registerPerson(Person requestPerson){
+
+    }
+
 }

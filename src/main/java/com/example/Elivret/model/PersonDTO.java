@@ -13,6 +13,7 @@ public class PersonDTO {
 
     private String userName;
     private String email;
+    private String password;
     Set<String> roles;
 
 }

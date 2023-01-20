@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -54,9 +55,10 @@ public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()//
 				.antMatchers("/secu-users/login").permitAll()//
 				.antMatchers("/secu-users/signup").permitAll()//
+				.antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
 				.antMatchers("/api/elivret/sections/**/take").authenticated()
 				// Autoriser le reste...
-				.antMatchers("/api/**").permitAll()
+				.antMatchers("/api/**").authenticated()
 
         		.anyRequest().permitAll();
 		//.anyRequest().access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
