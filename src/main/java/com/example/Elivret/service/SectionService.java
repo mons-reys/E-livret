@@ -5,6 +5,7 @@ package com.example.Elivret.service;
 import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Person;
 import com.example.Elivret.model.Section;
+import com.example.Elivret.repository.PersonRepository;
 import com.example.Elivret.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -24,7 +25,7 @@ public class SectionService {
     private ElivretService elivretService;
 
     @Autowired
-    private PersonService personService;
+    private PersonRepository personRepository;
     
     public void updateSection(Long sectionId,String title){
         Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
@@ -54,7 +55,7 @@ public class SectionService {
         //manual create admin for persistance exception
         Person admin = new Person();
         admin.setFirstName("admin");
-        personService.createPerson(admin);
+        personRepository.save(admin);
 
         //set Section properties
         requestSection.setPerson(admin);

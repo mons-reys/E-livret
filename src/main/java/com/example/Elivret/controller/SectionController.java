@@ -71,40 +71,11 @@ public class SectionController {
     @PostMapping ("/elivret/sections/{sectionId}/invite")
     public ResponseEntity inviteToFillSection(@PathVariable(value = "sectionId") Long sectionId,
                                         @RequestBody Person person) {
-        Section section = sectionService.findSectionById(sectionId);
-        Person person1= new Person();
 
-        person1.setEmail( person.getEmail().toUpperCase() );
-        person1.setUserName(person.getUserName());
-
-        String password = new Random().ints(10, 33, 122).collect(StringBuilder::new,
-                        StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
-
-
-        person1.setPassword(password);
-
-        Set<String> roles = new HashSet<String>();
-        roles.add(person.getPersonType());
-        person1.setRoles(roles);
-        section.setPerson(person1);
-
-        String token = userService.signup(person1);
-
-        String url = generateInvitationLink(sectionId, token, person.getUserName(), password);
+        String url = personService.registerPersonWithSection(person, sectionId);
         System.out.println(url);
 
         return new ResponseEntity(url, HttpStatus.OK);
-    }
-
-    public String generateInvitationLink(long sectionId, String token, String username, String password) {
-        UriComponentsBuilder builder =  UriComponentsBuilder.newInstance();
-        UriComponents uriComponents = builder.path("/section/{sectionId}/take")
-                .queryParam("token", token)
-                .queryParam("username", username)
-                .queryParam("password", password)
-                .buildAndExpand(sectionId);
-        return uriComponents.toUriString();
     }
 
 
