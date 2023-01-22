@@ -68,26 +68,8 @@ public class SectionController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping ("/elivret/sections/{sectionId}/invite")
-    public ResponseEntity inviteToFillSection(@PathVariable(value = "sectionId") Long sectionId,
-                                        @RequestBody Person person) {
-
-        String url = personService.registerPersonWithSection(person, sectionId);
-        System.out.println(url);
-
-        return new ResponseEntity(url, HttpStatus.OK);
-    }
 
 
-
-
-    @GetMapping("/elivret/sections/{sectionId}/take")
-    public ResponseEntity<List<Section>> takeSection(@PathVariable(value = "sectionId") Long sectionId) {
-        Section section = sectionService.findSectionById(sectionId);
-        List<Section> sections = new ArrayList<>();
-        sections.add(section);
-        return new ResponseEntity<>(sections, HttpStatus.OK);
-    }
 
 
 

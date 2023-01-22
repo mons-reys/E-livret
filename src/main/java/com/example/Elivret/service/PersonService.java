@@ -2,6 +2,7 @@ package com.example.Elivret.service;
 
 
 
+import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Person;
 import com.example.Elivret.model.Section;
 import com.example.Elivret.repository.PersonRepository;
@@ -13,9 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Configurable
@@ -24,6 +23,9 @@ public class PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private ElivretService elivretService;
 
     @Autowired
     private SectionService sectionService;
@@ -37,39 +39,60 @@ public class PersonService {
         Person person = personRepository.save(requestPerson);
     }
 
-    public String registerPersonWithSection(Person requestPerson, Long sectionId){
-        Section section = sectionService.findSectionById(sectionId);
-        Person person1= new Person();
+    public String registerPersonWithLivret(Person requestPerson, Long elivretId){
+        Person personToSave= new Person();
 
-        person1.setEmail( requestPerson.getEmail().toLowerCase() );
-        person1.setUserName(requestPerson.getUserName());
+        personToSave.setEmail( requestPerson.getEmail().toLowerCase() );
+        personToSave.setUserName(requestPerson.getUserName());
 
         String password = new Random().ints(10, 33, 122).collect(StringBuilder::new,
                         StringBuilder::appendCodePoint, StringBuilder::append)
                         .toString();
 
 
-        person1.setPassword(password);
+        personToSave.setPassword(password);
+        personToSave.setPersonType(requestPerson.getPersonType());
 
         Set<String> roles = new HashSet<String>();
         roles.add(requestPerson.getPersonType());
-        person1.setRoles(roles);
+        personToSave.setRoles(roles);
 
 
-        String token = userService.signup(person1);
-        section.setPerson(person1);
-        
-        String url = generateInvitationLink(sectionId, person1.getUserName(), password);
+        String token = userService.signup(personToSave);
+        Elivret elivret = elivretService.getElivretById(elivretId);
+        List<Person> persons = elivret.getPersons();
+        if( !containsPersonType(persons, requestPerson.getPersonType()) ){
+            persons.add(personToSave);
+            System.out.println(elivret.getPersons());
+        }else{
+            throw new RuntimeException("person Type exist");
+        }
+
+
+
+        String url = generateInvitationLink(elivretId, requestPerson.getUserName(), password);
 
         return url;
     }
 
-    public String generateInvitationLink(long sectionId, String username, String password) {
+
+    private boolean containsPersonType(List<Person> persons, String personType){
+        boolean result = false;
+        for(int i = 0; i < persons.size(); i++ ){
+            if( persons.get(i).getPersonType().equals(personType) ){
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public String generateInvitationLink(long elivretId, String username, String password) {
         UriComponentsBuilder builder =  UriComponentsBuilder.newInstance();
-        UriComponents uriComponents = builder.path("/section/{sectionId}/take")
+        UriComponents uriComponents = builder.path("user/elivret/{elivretId}/take")
                 .queryParam("username", username)
                 .queryParam("password", password)
-                .buildAndExpand(sectionId);
+                .buildAndExpand(elivretId);
         return uriComponents.toUriString();
     }
 

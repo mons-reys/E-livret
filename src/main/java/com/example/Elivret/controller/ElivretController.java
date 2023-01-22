@@ -3,6 +3,7 @@ package com.example.Elivret.controller;
 import com.example.Elivret.model.AppUserRole;
 import com.example.Elivret.model.Elivret;
 import com.example.Elivret.model.Person;
+import com.example.Elivret.model.Section;
 import com.example.Elivret.service.ElivretService;
 import com.example.Elivret.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class ElivretController {
 
 	@GetMapping("/all")
 	public ResponseEntity<List<Elivret>> showAllPosts() {
-		return new ResponseEntity<>(elivretService.findAllElivrets(), HttpStatus.OK);
+		List<Elivret> elivrets = elivretService.findAllElivrets();
+		return new ResponseEntity<>(elivrets, HttpStatus.OK);
 	}
 
 	@PutMapping ("/elivret/{elivretId}")
@@ -58,6 +60,23 @@ public class ElivretController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@PostMapping ("/elivret/{elivretId}/invite")
+	public ResponseEntity inviteToFillSection(@PathVariable(value = "elivretId") Long elivretId,
+											  @RequestBody Person person) {
+
+		String url = personService.registerPersonWithLivret(person, elivretId);
+		System.out.println(url);
+
+		return new ResponseEntity(url, HttpStatus.OK);
+	}
+
+	@GetMapping("/elivret/{elivretId}/take")
+	public ResponseEntity<List<Elivret>> takeElivret(@PathVariable(value = "elivretId") Long elivretId) {
+		Elivret elivret = elivretService.getElivretById(elivretId);
+		List<Elivret> elivrets = new ArrayList<Elivret>();
+		elivrets.add(elivret);
+		return new ResponseEntity<>(elivrets, HttpStatus.OK);
+	}
 
 	@PostConstruct
 	public void init() {

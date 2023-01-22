@@ -52,13 +52,6 @@ public class SectionService {
         //find elivret
         Elivret elivret = elivretService.findElivretById(elivretId);
 
-        //manual create admin for persistance exception
-        Person admin = new Person();
-        admin.setFirstName("admin");
-        personRepository.save(admin);
-
-        //set Section properties
-        requestSection.setPerson(admin);
         requestSection.setElivret(elivret);
         sectionRepository.save(requestSection);
     }

@@ -32,8 +32,8 @@ public class Question {
     @ElementCollection
     private List<String> options;
 
-    @ElementCollection
-    private List<String> answers;
+    @Basic
+    private String answer;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "section_id", nullable = false)

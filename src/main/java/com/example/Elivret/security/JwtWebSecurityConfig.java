@@ -56,11 +56,12 @@ public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/secu-users/login").permitAll()//
 				.antMatchers("/secu-users/signup").permitAll()//
 				.antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
-				.antMatchers("/api/elivret/sections/**/take").authenticated()
 				// Autoriser le reste...
 				.antMatchers("/api/**").authenticated()
+				.antMatchers("/api/elivret/sections/**/take").hasRole("alternant")
 
-        		.anyRequest().permitAll();
+
+				.anyRequest().permitAll();
 		//.anyRequest().access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
 
 		// Pas vraiment nécessaire
