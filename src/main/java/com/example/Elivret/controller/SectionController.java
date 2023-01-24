@@ -35,9 +35,8 @@ public class SectionController {
 
 	@PutMapping ("/elivret/{elivretId}/section/{sectionId}")
     public ResponseEntity updateSection(@PathVariable(value = "sectionId") Long elivretId,
-                                        @RequestBody String title, @RequestBody Person person) {
+                                        @RequestBody String title) {
         sectionService.updateSection(elivretId,title);
-        sectionService.updateSectionPerson(elivretId,person);
         return new ResponseEntity(HttpStatus.OK);
     }
 

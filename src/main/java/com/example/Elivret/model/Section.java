@@ -38,9 +38,5 @@ public class Section {
     @JsonIgnore
     private Elivret elivret;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "person_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Person person;
+
 }

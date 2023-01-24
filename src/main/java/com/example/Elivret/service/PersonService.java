@@ -39,7 +39,7 @@ public class PersonService {
         Person person = personRepository.save(requestPerson);
     }
 
-    public String registerPersonWithLivret(Person requestPerson, Long elivretId){
+    public String registerPersonWithLivret(Person requestPerson, Long elivretId, String domaineName){
         Person personToSave= new Person();
 
         personToSave.setEmail( requestPerson.getEmail().toLowerCase() );
@@ -70,7 +70,7 @@ public class PersonService {
 
 
 
-        String url = generateInvitationLink(elivretId, requestPerson.getUserName(), password);
+        String url = generateInvitationLink(elivretId, requestPerson.getUserName(), password,domaineName);
 
         return url;
     }
@@ -87,9 +87,9 @@ public class PersonService {
         return result;
     }
 
-    public String generateInvitationLink(long elivretId, String username, String password) {
+    public String generateInvitationLink(long elivretId, String username, String password, String domaineName) {
         UriComponentsBuilder builder =  UriComponentsBuilder.newInstance();
-        UriComponents uriComponents = builder.path("user/elivret/{elivretId}/take")
+        UriComponents uriComponents = builder.path(domaineName + "/elivret/{elivretId}/take")
                 .queryParam("username", username)
                 .queryParam("password", password)
                 .buildAndExpand(elivretId);

@@ -66,6 +66,11 @@ public class UserService {
 		return search(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
 	}
 
+	public String getRoleFromToken(String token){
+		Person p =  search(jwtTokenProvider.getUsername(token));
+		return  p.getRoles().iterator().next();
+	}
+
 	public String refresh(String username) {
 		return jwtTokenProvider.createToken(userRepository.findByUserName(username));
 	}

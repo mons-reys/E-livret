@@ -7,11 +7,13 @@ import com.example.Elivret.model.Section;
 import com.example.Elivret.service.ElivretService;
 import com.example.Elivret.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -61,10 +63,11 @@ public class ElivretController {
 	}
 
 	@PostMapping ("/elivret/{elivretId}/invite")
-	public ResponseEntity inviteToFillSection(@PathVariable(value = "elivretId") Long elivretId,
+	public ResponseEntity inviteToFillSection(HttpServletRequest request, @PathVariable(value = "elivretId") Long elivretId,
 											  @RequestBody Person person) {
 
-		String url = personService.registerPersonWithLivret(person, elivretId);
+		String origin = request.getHeader(HttpHeaders.ORIGIN);
+		String url = personService.registerPersonWithLivret(person, elivretId,origin);
 		System.out.println(url);
 
 		return new ResponseEntity(url, HttpStatus.OK);

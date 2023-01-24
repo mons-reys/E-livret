@@ -33,11 +33,11 @@ public class SectionService {
         sectionRepository.save(sectionToUpdate);
     }
 
-    public void updateSectionPerson(Long sectionId,Person person){
-        Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
-        sectionToUpdate.setPerson(person);
-        sectionRepository.save(sectionToUpdate);
-    }
+//    public void updateSectionPerson(Long sectionId,Person person){
+//        Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
+//        sectionToUpdate.setPerson(person);
+//        sectionRepository.save(sectionToUpdate);
+//    }
 
     public void deleteSection(Long sectionId){
         Section sectionToDelete = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));

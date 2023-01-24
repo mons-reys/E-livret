@@ -1,12 +1,15 @@
 package com.example.Elivret.controller;
 
 
+import com.example.Elivret.model.LoginData;
 import com.example.Elivret.model.Person;
 import com.example.Elivret.model.PersonDTO;
 import com.example.Elivret.security.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +33,14 @@ public class UserController {
 	 * Authentification et récupération d'un JWT
 	 */
 	@PostMapping("/login")
-	public String login(//
-			@RequestBody PersonDTO person) {
-		System.out.println(person);
-		return userService.login(person.getUserName(), person.getPassword());
+	public ResponseEntity login(@RequestBody PersonDTO person) {
+
+		String token = userService.login(person.getUserName(), person.getPassword());
+		LoginData data = new LoginData();
+		data.setToken(token);
+		data.setRole(userService.getRoleFromToken(token));
+		System.out.println(data);
+		return new ResponseEntity<LoginData>(data,HttpStatus.OK);
 	}
 
 	/**
