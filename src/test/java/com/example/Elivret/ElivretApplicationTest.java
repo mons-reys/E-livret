@@ -91,9 +91,8 @@ public class ElivretApplicationTest {
         options.add("option 1 ");
         question.setOptions(options);
 
-        List<String> answers = new ArrayList<String>();
-        answers.add("answer 1 ");
-        question.setAnswers(answers);
+        String answer = "answer 1 ";
+        question.setAnswer(answer);
 
 
         questionService.createQuestion(section.getId() ,question);
@@ -127,9 +126,8 @@ public class ElivretApplicationTest {
         options.add("option 1 ");
         question.setOptions(options);
 
-        List<String> answers = new ArrayList<String>();
-        answers.add("answer 1 ");
-        question.setAnswers(answers);
+        String answer = "answer 1 ";
+        question.setAnswer(answer);
 
         questionService.createQuestion(section.getId() ,question);
 
