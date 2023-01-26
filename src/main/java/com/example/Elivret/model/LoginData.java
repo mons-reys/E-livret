@@ -12,4 +12,6 @@ import java.util.Set;
 public class LoginData {
     private String token;
     private String role;
+
+    private Long id;
 }

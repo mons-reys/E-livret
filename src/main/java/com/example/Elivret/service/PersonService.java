@@ -24,6 +24,7 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+
     @Autowired
     private ElivretService elivretService;
 
@@ -40,37 +41,50 @@ public class PersonService {
     }
 
     public String registerPersonWithLivret(Person requestPerson, Long elivretId, String domaineName){
-        Person personToSave= new Person();
 
-        personToSave.setEmail( requestPerson.getEmail().toLowerCase() );
-        personToSave.setUserName(requestPerson.getUserName());
+        boolean personExist = personRepository.existsByEmail( requestPerson.getEmail().toLowerCase() );
+        System.out.println(personExist);
 
-        String password = new Random().ints(10, 33, 122).collect(StringBuilder::new,
-                        StringBuilder::appendCodePoint, StringBuilder::append)
-                        .toString();
+        Person personToSave;
+        String password;
+        if(!personExist){
+            personToSave= new Person();
+            personToSave.setEmail( requestPerson.getEmail().toLowerCase() );
+            personToSave.setUserName(requestPerson.getUserName());
 
-
-        personToSave.setPassword(password);
-        personToSave.setPersonType(requestPerson.getPersonType());
-
-        Set<String> roles = new HashSet<String>();
-        roles.add(requestPerson.getPersonType());
-        personToSave.setRoles(roles);
+            password = new Random().ints(10, 33, 122).collect(StringBuilder::new,
+                            StringBuilder::appendCodePoint, StringBuilder::append)
+                    .toString();
 
 
-        String token = userService.signup(personToSave);
+            personToSave.setPassword(password);
+            personToSave.setPersonType(requestPerson.getPersonType());
+
+            Set<String> roles = new HashSet<String>();
+            roles.add(requestPerson.getPersonType());
+            personToSave.setRoles(roles);
+            userService.signup(personToSave);
+        }else{
+            personToSave = personRepository.findByEmail(requestPerson.getEmail().toLowerCase());
+        }
+
         Elivret elivret = elivretService.getElivretById(elivretId);
+
+        System.out.println(elivret);
+        System.out.println(personToSave);
+
         List<Person> persons = elivret.getPersons();
         if( !containsPersonType(persons, requestPerson.getPersonType()) ){
             persons.add(personToSave);
             System.out.println(elivret.getPersons());
+            System.out.println("personToSave");
         }else{
             throw new RuntimeException("person Type exist");
         }
 
 
 
-        String url = generateInvitationLink(elivretId, requestPerson.getUserName(), password,domaineName);
+        String url = generateInvitationLink(elivretId, requestPerson.getUserName(), personToSave.getPassword(),domaineName);
 
         return url;
     }

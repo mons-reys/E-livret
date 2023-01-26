@@ -71,6 +71,11 @@ public class UserService {
 		return  p.getRoles().iterator().next();
 	}
 
+	public Long getPersonIdeFromToken(String token){
+		Person p =  search(jwtTokenProvider.getUsername(token));
+		return  p.getId();
+	}
+
 	public String refresh(String username) {
 		return jwtTokenProvider.createToken(userRepository.findByUserName(username));
 	}

@@ -33,10 +33,17 @@ public class SectionController {
 
 
 
-	@PutMapping ("/elivret/{elivretId}/section/{sectionId}")
+	@PutMapping ("/elivret/sections/{sectionId}")
     public ResponseEntity updateSection(@PathVariable(value = "sectionId") Long elivretId,
                                         @RequestBody String title) {
         sectionService.updateSection(elivretId,title);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping ("/elivret/sections/{sectionId}/updatePersonType")
+    public ResponseEntity updatePersonType(@PathVariable(value = "sectionId") Long elivretId,
+                                        @RequestBody String persontype) {
+        sectionService.updatePersonType(elivretId,persontype);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -44,6 +51,12 @@ public class SectionController {
     public ResponseEntity deleteSection(@PathVariable(value = "sectionId") Long sectionId) {
         sectionService.deleteSection(sectionId);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping ("/elivret/sections/{sectionId}")
+    public ResponseEntity getSectionById(@PathVariable(value = "sectionId") Long sectionId) {
+       Section section =  sectionService.findSectionById(sectionId);
+        return new ResponseEntity(section, HttpStatus.OK);
     }
 
     //remove add*

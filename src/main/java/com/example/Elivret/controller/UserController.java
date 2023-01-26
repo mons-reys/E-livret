@@ -39,6 +39,7 @@ public class UserController {
 		LoginData data = new LoginData();
 		data.setToken(token);
 		data.setRole(userService.getRoleFromToken(token));
+		data.setId(userService.getPersonIdeFromToken(token));
 		System.out.println(data);
 		return new ResponseEntity<LoginData>(data,HttpStatus.OK);
 	}

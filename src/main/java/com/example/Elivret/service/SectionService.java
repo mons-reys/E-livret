@@ -33,6 +33,12 @@ public class SectionService {
         sectionRepository.save(sectionToUpdate);
     }
 
+    public void updatePersonType(Long sectionId,String personType){
+        Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
+        sectionToUpdate.setPersonType(personType);
+        sectionRepository.save(sectionToUpdate);
+    }
+
 //    public void updateSectionPerson(Long sectionId,Person person){
 //        Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
 //        sectionToUpdate.setPerson(person);

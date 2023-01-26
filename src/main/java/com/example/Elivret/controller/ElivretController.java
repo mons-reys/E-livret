@@ -81,6 +81,14 @@ public class ElivretController {
 		return new ResponseEntity<>(elivrets, HttpStatus.OK);
 	}
 
+	@GetMapping("elivret/person/{personId}")
+	public ResponseEntity<List<Elivret>> getPeronLivrets(@PathVariable(value = "personId") Long personId){
+		List<Elivret> elivrets = elivretService.getElivretByPersonId(personId);
+		return new ResponseEntity<>(elivrets, HttpStatus.OK);
+	}
+
+
+
 	@PostConstruct
 	public void init() {
 		//create Admin
