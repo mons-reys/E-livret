@@ -103,7 +103,7 @@ public class PersonService {
 
     public String generateInvitationLink(long elivretId, String username, String password, String domaineName) {
         UriComponentsBuilder builder =  UriComponentsBuilder.newInstance();
-        UriComponents uriComponents = builder.path(domaineName + "/elivret/{elivretId}/take")
+        UriComponents uriComponents = builder.path(domaineName + "/login")
                 .queryParam("username", username)
                 .queryParam("password", password)
                 .buildAndExpand(elivretId);
