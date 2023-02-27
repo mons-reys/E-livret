@@ -29,7 +29,7 @@ public class Elivret {
     private String title;
 
     @Size(min=0, max=3)
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Person> persons;
 
 }

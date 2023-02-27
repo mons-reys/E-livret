@@ -17,8 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.*;
 
 @Service
-@Configurable
-@Transactional
 public class PersonService {
 
     @Autowired
@@ -65,6 +63,7 @@ public class PersonService {
             personToSave.setRoles(roles);
             userService.signup(personToSave);
         }else{
+            System.out.println("else");
             personToSave = personRepository.findByEmail(requestPerson.getEmail().toLowerCase());
         }
 
@@ -74,15 +73,19 @@ public class PersonService {
         System.out.println(personToSave);
 
         List<Person> persons = elivret.getPersons();
-        if( !containsPersonType(persons, requestPerson.getPersonType()) ){
+
+        if( !containsPersonType(persons, personToSave.getPersonType()) ){
+            System.out.println("before " + elivret.getPersons());
             persons.add(personToSave);
-            System.out.println(elivret.getPersons());
+            System.out.println("after " + elivret.getPersons());
             System.out.println("personToSave");
         }else{
             throw new RuntimeException("person Type exist");
         }
 
-
+        elivret.setPersons(persons);
+        System.out.println("last " + elivret);
+        elivretService.createElivret(elivret);
 
         String url = generateInvitationLink(elivretId, requestPerson.getUserName(), personToSave.getPassword(),domaineName);
 

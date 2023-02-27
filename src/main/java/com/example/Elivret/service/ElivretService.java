@@ -19,7 +19,7 @@ import java.util.List;
 public class ElivretService {
     @Autowired
     private ElivretRepository  elivretRepository;
-    
+
     public void updateElivret(Long elivretId,String title){
         Elivret elivretToUpdate = elivretRepository.findById(elivretId).orElseThrow(() -> new RuntimeException("cannot find eLivret with id : " + elivretId));
         elivretToUpdate.setTitle(title);
@@ -38,10 +38,9 @@ public class ElivretService {
                 }
             }
         }
-
         return result;
     }
-    
+
     public Elivret getElivretById(Long elivretId) {
         Elivret elivret = elivretRepository.findById(elivretId).orElseThrow(() -> new RuntimeException("cannot find eLivret with id : " + elivretId));
         return elivret;

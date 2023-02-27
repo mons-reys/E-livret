@@ -1,9 +1,6 @@
 package com.example.Elivret.service;
 
-import com.example.Elivret.model.Elivret;
-import com.example.Elivret.model.Question;
-import com.example.Elivret.model.QuestionType;
-import com.example.Elivret.model.Section;
+import com.example.Elivret.model.*;
 import com.example.Elivret.service.ElivretService;
 import com.example.Elivret.service.QuestionService;
 import com.example.Elivret.service.SectionService;
@@ -28,12 +25,15 @@ public class ElivretApplicationTest {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    PersonService personService;
+
     @Test
-    public void testCreateAndGetAndDeleteElivret(){
+    public void testCreateAndGetAndDeleteElivret() {
         Elivret p = new Elivret();
         p.setTitle("E2");
         elivretService.createElivret(p);
-        List<Elivret> list =  elivretService.findAllElivrets();
+        List<Elivret> list = elivretService.findAllElivrets();
         assertEquals("E2", list.get(0).getTitle());
         assertEquals("E2", p.getTitle());
         System.out.println(p.getId());
@@ -42,7 +42,7 @@ public class ElivretApplicationTest {
     }
 
     @Test
-    public void testCreateAndGetSeciton(){
+    public void testCreateAndGetSeciton() {
         Elivret elivret = new Elivret();
         elivret.setTitle("E2");
         elivretService.createElivret(elivret);
@@ -65,7 +65,7 @@ public class ElivretApplicationTest {
 
 
     @Test
-    public void testCreateAndGetQuestion(){
+    public void testCreateAndGetQuestion() {
 
         Elivret elivret = new Elivret();
         elivret.setTitle("E2");
@@ -76,7 +76,7 @@ public class ElivretApplicationTest {
         section.setTitle("section 1");
         sectionService.createSection(elivret.getId(), section);
 
-        Question question =  new Question();
+        Question question = new Question();
         question.setContent("question 1");
         question.setType(QuestionType.text);
 
@@ -85,12 +85,11 @@ public class ElivretApplicationTest {
         options.add("option 1 ");
         question.setOptions(options);
 
-        List<String> answers = new ArrayList<String>();
-        answers.add("answer 1 ");
-        question.setAnswers(answers);
+        String answer = "answer 1";
+        question.setAnswer(answer);
 
 
-        questionService.createQuestion(section.getId() ,question);
+        questionService.createQuestion(section.getId(), question);
 
 
         Question result = questionService.findByQuestionId(question.getId());
@@ -99,4 +98,36 @@ public class ElivretApplicationTest {
         assertEquals("question 1", result.getContent());
     }
 
+    @Test
+    public void testLinkPersonWithTwoLivrets() {
+        Person person = new Person();
+        person.setUserName("mario@gmail.com");
+        person.setEmail("mario@gmail.com");
+        person.setPassword("mario@gmail.com");
+        person.setPersonType("Tuteur");
+
+
+        Elivret elivret1 = new Elivret();
+        elivret1.setTitle("E1");
+        elivretService.createElivret(elivret1);
+
+        List<Person> personList = new ArrayList<Person>();
+        personList.add(person);
+        elivret1.setPersons(personList);
+
+        String url = personService.registerPersonWithLivret(person, elivret1.getId(), "test");
+        assertEquals("test/login?username=mario@gmail.com", url);
+
+
+
+        Elivret elivret2 = new Elivret();
+        elivret2.setTitle("E2");
+        elivretService.createElivret(elivret2);
+
+        person.setPersonType("Alternant");
+
+
+        String url2 = personService.registerPersonWithLivret(person, elivret2.getId(), "test");
+        assertEquals("test/login?username=mario@gmail.com", url2);
+    }
 }

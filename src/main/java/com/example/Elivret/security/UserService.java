@@ -93,4 +93,8 @@ public class UserService {
 		return null;
 	}
 
+	public String getEmailFromToken(String token) {
+		Person p =  search(jwtTokenProvider.getUsername(token));
+		return  p.getEmail();
+	}
 }

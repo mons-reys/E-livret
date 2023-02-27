@@ -9,6 +9,7 @@ import com.example.Elivret.repository.PersonRepository;
 import com.example.Elivret.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,8 @@ public class SectionService {
 
     @Autowired
     private PersonRepository personRepository;
-    
+
+
     public void updateSection(Long sectionId,String title){
         Section sectionToUpdate = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
         sectionToUpdate.setTitle(title);
@@ -72,6 +74,7 @@ public class SectionService {
         return section;
     }
 
+    @PreAuthorize("hasAnyRole('Role_Admin', 'Tuteur')")
     public void updateVisibility(Long sectionId, boolean visibility) {
         Section section = sectionRepository.findById(sectionId).orElseThrow(() -> new RuntimeException("cannot find section with id : " + sectionId));
         section.setVisibility(visibility);

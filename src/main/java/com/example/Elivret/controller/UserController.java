@@ -40,7 +40,7 @@ public class UserController {
 		data.setToken(token);
 		data.setRole(userService.getRoleFromToken(token));
 		data.setId(userService.getPersonIdeFromToken(token));
-		System.out.println(data);
+		data.setEmail(userService.getEmailFromToken(token));
 		return new ResponseEntity<LoginData>(data,HttpStatus.OK);
 	}
 

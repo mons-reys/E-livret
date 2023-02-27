@@ -67,7 +67,7 @@ public class ElivretController {
 											  @RequestBody Person person) {
 
 		String origin = request.getHeader(HttpHeaders.ORIGIN);
-		String url = personService.registerPersonWithLivret(person, elivretId,origin);
+		String url = personService.registerPersonWithLivret(person, elivretId, origin);
 		System.out.println(url);
 
 		return new ResponseEntity(url, HttpStatus.OK);
@@ -95,7 +95,7 @@ public class ElivretController {
 		Set<String> roles = new HashSet<String>();
 		roles.add( String.valueOf(AppUserRole.ROLE_ADMIN) );
 
-		Person p = new Person(1L, "admin", "admin", "admin", "admin", "admin", roles, "test" );
+		Person p = new Person(1L, "admin", "admin", "admin@gmail.com", "admin", "admin", roles, "test" );
 		personService.createPerson(p);
 	}
 
