@@ -48,6 +48,24 @@ public class QuestionService {
         question.setContent(newContent);
         questionRepository.save(question);
     }
+    public void answer(Long questionId, String answer) {
+        //find question
+        Question question = findByQuestionId(questionId);
+
+        //set question new content
+        question.setAnswer(answer);
+        questionRepository.save(question);
+    }
+    public void updateQuestion2(Long questionId, String newContent,List<String> options) {
+        //find question
+        Question question = findByQuestionId(questionId);
+
+        //set question new content
+        
+        question.setContent(newContent);
+       question.setOptions(options);
+        questionRepository.save(question);
+    }
     
     public void deleteQuestion(Long questionId) {
         //find question

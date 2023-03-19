@@ -43,6 +43,18 @@ public class QuestionController {
         questionService.updateQuestion(questionId,newContent);
         return new ResponseEntity(HttpStatus.OK);
     }
+    @PutMapping ("/sections/{sectionId}/AnswerQuestions/{questionId}")
+    public ResponseEntity answer(@PathVariable(value = "questionId") Long questionId,
+                                         @RequestBody String answer) {
+        questionService.answer(questionId,answer);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    @PutMapping ("/sections/{sectionId}/questionsOptions/{questionId}")
+    public ResponseEntity updateQuestion2(@PathVariable(value = "questionId") Long questionId,
+                                         @RequestBody Question question) {
+        questionService.updateQuestion2(questionId,question.getContent(),question.getOptions());
+        return new ResponseEntity(HttpStatus.OK);
+    }
     
     @DeleteMapping("/sections/{sectionId}/questions/{questionId}")
     public ResponseEntity deleteQuestion(@PathVariable(value = "questionId") Long questionId)
@@ -51,4 +63,5 @@ public class QuestionController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    
 }
