@@ -11,6 +11,7 @@ import com.example.Elivret.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -34,6 +35,7 @@ public class SectionController {
 
 
 	@PutMapping ("/elivret/sections/{sectionId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity updateSection(@PathVariable(value = "sectionId") Long elivretId,
                                         @RequestBody String title) {
         sectionService.updateSection(elivretId,title);
@@ -41,6 +43,7 @@ public class SectionController {
     }
 
     @PutMapping ("/elivret/sections/{sectionId}/updatePersonType")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity updatePersonType(@PathVariable(value = "sectionId") Long elivretId,
                                         @RequestBody String persontype) {
         sectionService.updatePersonType(elivretId,persontype);
@@ -48,12 +51,14 @@ public class SectionController {
     }
 
 	@DeleteMapping ("/elivret/sections/{sectionId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity deleteSection(@PathVariable(value = "sectionId") Long sectionId) {
         sectionService.deleteSection(sectionId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping ("/elivret/sections/{sectionId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity getSectionById(@PathVariable(value = "sectionId") Long sectionId) {
        Section section =  sectionService.findSectionById(sectionId);
         return new ResponseEntity(section, HttpStatus.OK);
@@ -61,6 +66,7 @@ public class SectionController {
 
     //remove add*
     @PostMapping ("/elivret/{elivretId}/sections/add")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity createSection(@PathVariable(value = "elivretId") Long elivretId,
                                         @RequestBody Section sectionRequest) {
         sectionService.createSection(elivretId, sectionRequest);
@@ -68,12 +74,14 @@ public class SectionController {
     }
 
     @GetMapping("/elivret/{elivretId}/sections")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Section>> findAlleLivretSections(@PathVariable(value = "elivretId") Long elivretId) {
         List<Section> sections = sectionService.findSectionsByElivretId(elivretId);
         return new ResponseEntity<>(sections, HttpStatus.OK);
     }
 
     @PostMapping ("/elivret/sections/{sectionId}/updateVisibility")
+    @PreAuthorize("hasAuthority('Tuteur')")
     public ResponseEntity createSection(@PathVariable(value = "sectionId") Long sectionId,
                                         @RequestBody boolean visibility) {
         sectionService.updateVisibility(sectionId, visibility);

@@ -113,5 +113,20 @@ public class PersonService {
         return uriComponents.toUriString();
     }
 
+    public boolean isPersonInElivret(Long personId,Long elivretId){
+        Elivret elivret = elivretService.getElivretById(elivretId);
+        return elivret.getPersons().contains(personRepository.getReferenceById(personId));
+    }
+
+    public boolean isSectionForPersonType(Long personId,Section section){
+        Person user = personRepository.getReferenceById(personId);
+        return section.getPersonType().equals(user.getPersonType());
+    }
+
+    public Person getPersonById(Long personId) {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new RuntimeException("cannot find person with id : " + personId));
+        return person;
+    }
+
 
 }

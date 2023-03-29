@@ -84,7 +84,7 @@ public class UserController {
 	 * Récupérer un nouveau JWT
 	 */
 	@GetMapping("/refresh")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+	//@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	public String refresh(HttpServletRequest req) {
 		return userService.refresh(req.getRemoteUser());
 	}
@@ -93,7 +93,7 @@ public class UserController {
 	 * Logout
 	 */
 	@GetMapping("/logout")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+	//@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	public String logout(HttpServletRequest req) {
 		return userService.logout(req);
 	}
